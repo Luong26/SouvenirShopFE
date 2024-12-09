@@ -1,0 +1,173 @@
+/* Container for the entire Vouchers page */
+.vouchersContainer {
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  /* Title for the Vouchers page */
+  .vouchersContainer h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  /* Style for 'Add Voucher' button */
+  .addVoucherButton {
+    background-color: #007bff; /* Blue background */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 20px;
+    display: inline-block;
+  }
+  
+  .addVoucherButton:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  /* Style for the table */
+  .vouchersTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border: 1px solid #000; /* Border around the table */
+  }
+  
+  /* Style for the table header */
+  .vouchersTable thead {
+    background-color: #007bff; /* Blue background for table header */
+    color: white;
+  }
+  
+  /* Style for table rows and cells */
+  .vouchersTable th, .vouchersTable td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #000; /* Black border */
+  }
+  
+  .vouchersTable tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Style for Edit and Delete buttons */
+  .editButton, .deleteButton {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 0 5px;
+  }
+  
+  .editButton {
+  background-color: #ffc107;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #e0a800; /* Updated hover color */
+  }
+}
+
+.deleteButton {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #c82333; /* Updated hover color */
+  }
+}
+
+  
+  /* Modal styling for Add/Edit Voucher */
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modalContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  /* Modal header */
+  .modalContent h3 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Modal form fields */
+  .modalForm label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .modalForm input {
+    width: 100%; /* Ensure input fields fit the modal */
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+  }
+  
+  /* Modal button layout */
+  .modalButtons {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  /* Style for modal buttons */
+  .saveChangesButton, .cancelButton {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 48%; /* Buttons take equal width */
+  }
+  
+  .saveChangesButton {
+    background-color: #007bff; /* Blue background */
+    color: white;
+  }
+  
+  .saveChangesButton:hover {
+    background-color: #0056b3;
+  }
+  
+  .cancelButton {
+    background-color: #dc3545; /* Red background */
+    color: white;
+  }
+  
+  .cancelButton:hover {
+    background-color: #c82333;
+  }
+  

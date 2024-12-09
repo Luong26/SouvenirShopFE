@@ -1,0 +1,147 @@
+.container {
+    padding: 20px;
+  }
+  
+  h2 {
+    color: #333;
+  }
+  
+  .addCategoryButton {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .addCategoryButton:hover {
+    background-color: #0056b3;
+  }
+  
+  .categoriesTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .categoriesTable th,
+  .categoriesTable td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .categoriesTable th {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .imagePreview {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .editButton,
+  .deleteButton {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  
+  .editButton {
+    background-color: #ffc107;
+    color: black;
+  }
+  
+  .deleteButton {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .editButton:hover {
+    background-color: #e0a800;
+  }
+  
+  .deleteButton:hover {
+    background-color: #c82333;
+  }
+  
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modalContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .modalForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .modalForm label {
+    font-weight: bold;
+  }
+  
+  .modalForm input,
+  .modalForm textarea {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .modalButtons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .saveChangesButton {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 48%;
+  }
+  
+  .saveChangesButton:hover {
+    background-color: #0056b3;
+  }
+  
+  .cancelButton {
+    background-color: #dc3545;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 48%;
+  }
+  
+  .cancelButton:hover {
+    background-color: #c82333;
+  }
+  
