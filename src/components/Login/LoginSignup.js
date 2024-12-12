@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from './LoginSignup.module.scss';
+import backgroundImage from './background.jpg'; // Adjust the path to your image file
 
 const LoginSignup = ({ onLogin }) => {
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -29,7 +30,10 @@ const LoginSignup = ({ onLogin }) => {
   };
 
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      style={{ backgroundImage: `url(${backgroundImage})` }} // Apply background image dynamically
+    >
       <div className={styles.formWrapper}>
         <h2>{isLoginMode ? 'Login' : 'Sign Up'}</h2>
         <form onSubmit={handleSubmit}>

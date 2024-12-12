@@ -1,64 +1,176 @@
-/* Orders.module.scss */
+// .ordersContainer {
+//   background-color: #f4f4f4;
+//   padding: 20px;
+//   border-radius: 8px;
+//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+// }
+
+// h2 {
+//   font-size: 24px;
+//   color: #333;
+//   margin-bottom: 20px;
+// }
+
+// .ordersTable {
+//   width: 100%;
+//   border-collapse: collapse;
+//   margin-top: 20px;
+// }
+
+// .ordersTable th,
+// .ordersTable td {
+//   padding: 10px;
+//   text-align: left;
+//   border: 1px solid #ddd;
+//   font-size: 14px;
+// }
+
+// .ordersTable th {
+//   background-color: #007BFF; /* Blue background for header */
+//   color: white; /* White text color for header */
+//   font-weight: bold;
+// }
+
+// .ordersTable tr:nth-child(even) {
+//   background-color: #f9f9f9;
+// }
+
+// .ordersTable tr:hover {
+//   background-color: #f1f1f1;
+// }
+
+// .statusDropdown {
+//   padding: 5px;
+//   border-radius: 5px;
+//   border: 1px solid #ccc;
+//   background-color: #fff;
+//   color: black;
+//   font-size: 14px;
+// }
+
+// .actionButton {
+//   background-color: #007bff;
+//   color: white;
+//   border: none;
+//   padding: 5px 10px;
+//   border-radius: 5px;
+//   cursor: pointer;
+//   font-size: 14px;
+//   margin: 0 5px;
+// }
+
+// .actionButton:hover {
+//   background-color: #0056b3;
+// }
+
+
 .ordersContainer {
-    background-color: #f4f4f4;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  h2 {
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  .ordersTable {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .ordersTable th,
-  .ordersTable td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd;
-    font-size: 14px;
-  }
-  
-  .ordersTable th {
-    background-color: #007BFF; /* Blue background for header */
-    color: white; /* White text color for header */
-    font-weight: bold;
-  }
-  
-  .ordersTable tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  .ordersTable tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .statusDropdown {
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    color: black;
-    font-size: 14px;
-  }
-  
-  button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #45a049;
-  }
-  
+  padding: 20px;
+}
+
+.pageTitle {
+  margin-bottom: 20px;
+}
+
+.ordersTable,
+.itemsTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ordersTable th,
+.itemsTable th {
+  background-color: #007bff; /* Set background color for table headers */
+  color: white;
+  padding: 8px;
+  text-align: center; /* Center-align the text in table headers */
+  border: 1px solid #ddd;
+}
+
+.ordersTable td,
+.itemsTable td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center; /* Center-align the text in table content */
+}
+
+.viewButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-right: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.viewButton:hover {
+  background-color: #0056b3;
+}
+
+.deleteButton {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-right: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.deleteButton:hover {
+  background-color: #c82333;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 70%; /* Adjusted width to make it wider */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modalTitle {
+  background-color: #ffffff;
+  color: black;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.closeButton {
+  background-color: #d9534f;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px; /* Added margin-top to separate from the table */
+}
+
+.closeButton:hover {
+  background-color: #c9302c;
+}
+
+.statusDropdown {
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.totalPrice {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 20px;
+  text-align: left;  // Align the total to the right
+}

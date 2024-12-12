@@ -1,29 +1,32 @@
-/* Horizontal Navbar Styles */
-
 .navbar {
-    display: flex;
-    justify-content: center; /* Center items horizontally */
-    align-items: center; /* Align items vertically */
-    height: 50px; /* Adjust navbar height */
-    padding-left: 50px;
-  }
-  
-  .navLinks {
-    display: flex;
-    gap: 20px; /* Add spacing between links */
-  }
-  
-  .navLink {
-    color: #333;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 5px;
-  }
-  
-  .navLink:hover {
-    background-color: #007bff; /* Blue background on hover */
-    color: white;
-  }
-  
+  display: flex;
+  justify-content: center; /* Center items horizontally */
+  align-items: center; /* Align items vertically */
+  height: 50px; /* Adjust navbar height */
+  padding-left: 50px;
+}
+
+.navLinks {
+  display: flex;
+  gap: 20px; /* Add spacing between links */
+}
+
+.navLink {
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out; /* Smooth transition for hover and active effects */
+}
+
+.navLink:hover {
+  background-color: #007bff; /* Blue background on hover */
+  color: white;
+}
+
+.active {
+  background-color: #5fa395; /* Highlight background color matching navbar */
+  color: white; /* Highlight text color */
+}
