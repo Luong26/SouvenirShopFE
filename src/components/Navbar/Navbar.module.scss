@@ -4,6 +4,7 @@
   align-items: center; /* Align items vertically */
   height: 50px; /* Adjust navbar height */
   padding-left: 50px;
+  background-color: #5fa395; /* Header background color */
 }
 
 .navLinks {
@@ -12,21 +13,24 @@
 }
 
 .navLink {
-  color: #333;
+  color: black; /* Default text color */
   text-decoration: none;
   font-size: 16px;
   font-weight: bold;
   padding: 5px 10px;
   border-radius: 5px;
+  border: 1px solid transparent; /* Transparent border */
   transition: all 0.3s ease-in-out; /* Smooth transition for hover and active effects */
 }
 
 .navLink:hover {
-  background-color: #007bff; /* Blue background on hover */
-  color: white;
+  color: #ffffff; /* White text on hover */
+  background-color: #5fa395; /* Same as header background for hover */
+  border-color: #3d6e5f; /* Subtle border in dark teal */
 }
 
 .active {
-  background-color: #5fa395; /* Highlight background color matching navbar */
-  color: white; /* Highlight text color */
+  background-color: #3d6e5f; /* Highlight background color (dark teal) */
+  color: #ffffff; /* Highlight text color */
+  border-color: #3d6e5f; /* Match border to background */
 }

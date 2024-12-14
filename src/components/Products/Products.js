@@ -10,6 +10,15 @@ const Products = () => {
   const [products, setProducts] = useState(initialProducts);
   const [showModal, setShowModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleAddProduct = () => {
     setShowModal(true);
@@ -58,17 +67,26 @@ const Products = () => {
   return (
     <div className={styles.productsContainer}>
       <h2>Manage Products</h2>
-      <button className={styles.addProductButton} onClick={handleAddProduct}>
-        Add Product
-      </button>
+      <div className={styles.actionsRow}>
+        <button className={styles.addProductButton} onClick={handleAddProduct}>
+          Add Product
+        </button>
+        <div className={styles.searchContainer}>
+          <input
+            type="text"
+            placeholder="Search by product name"
+            value={searchQuery}
+            onChange={handleSearch}
+            className={styles.searchInput}
+          />
+        </div>
+      </div>
       <table className={styles.productsTable}>
         <thead>
           <tr>
             <th>Image</th>
             <th>Name</th>
             <th>Category</th>
-            {/* <th>Base Price</th>
-            <th>Discount Price</th> */}
             <th>Stock</th>
             <th>Sold</th>
             <th>Description</th>
@@ -76,7 +94,7 @@ const Products = () => {
           </tr>
         </thead>
         <tbody>
-          {products.map((product) => (
+          {filteredProducts.map((product) => (
             <tr key={product.id}>
               <td>
                 {product.image ? (
@@ -91,8 +109,6 @@ const Products = () => {
               </td>
               <td>{product.name}</td>
               <td>{product.category}</td>
-              {/* <td>{product.basePrice}</td>
-              <td>{product.discountPrice}</td> */}
               <td>{product.stock}</td>
               <td>{product.sold}</td>
               <td>{product.description}</td>
@@ -115,93 +131,91 @@ const Products = () => {
         </tbody>
       </table>
 
-      {/* Modal for adding/editing product */}
       {showModal && (
-  <div className={styles.modal}>
-    <div className={styles.modalContent}>
-      <h3>{selectedProduct.id ? 'Edit Product' : 'Add Product'}</h3>
-      <div className={styles.modalForm}>
-        <label>Name</label>
-        <input
-          type="text"
-          name="name"
-          value={selectedProduct.name}
-          onChange={handleInputChange}
-        />
+        <div className={styles.modal}>
+          <div className={styles.modalContent}>
+            <h3>{selectedProduct.id ? 'Edit Product' : 'Add Product'}</h3>
+            <div className={styles.modalForm}>
+              <label>Name</label>
+              <input
+                type="text"
+                name="name"
+                value={selectedProduct.name}
+                onChange={handleInputChange}
+              />
 
-        <label>Description</label>
-        <textarea
-          name="description"
-          value={selectedProduct.description}
-          onChange={handleInputChange}
-        />
+              <label>Description</label>
+              <textarea
+                name="description"
+                value={selectedProduct.description}
+                onChange={handleInputChange}
+              />
 
-        <label>Category</label>
-        <input
-          type="text"
-          name="category"
-          value={selectedProduct.category}
-          onChange={handleInputChange}
-        />
+              <label>Category</label>
+              <input
+                type="text"
+                name="category"
+                value={selectedProduct.category}
+                onChange={handleInputChange}
+              />
 
-        <label>Stock Quantity</label>
-        <input
-          type="number"
-          name="stock"
-          value={selectedProduct.stock}
-          onChange={handleInputChange}
-        />
+              <label>Stock Quantity</label>
+              <input
+                type="number"
+                name="stock"
+                value={selectedProduct.stock}
+                onChange={handleInputChange}
+              />
 
-        <label>Base Price</label>
-        <input
-          type="number"
-          step="0.01"
-          name="basePrice"
-          value={selectedProduct.basePrice}
-          onChange={handleInputChange}
-        />
+              <label>Base Price</label>
+              <input
+                type="number"
+                step="0.01"
+                name="basePrice"
+                value={selectedProduct.basePrice}
+                onChange={handleInputChange}
+              />
 
-        <label>Discount Price</label>
-        <input
-          type="number"
-          step="0.01"
-          name="discountPrice"
-          value={selectedProduct.discountPrice}
-          onChange={handleInputChange}
-        />
+              <label>Discount Price</label>
+              <input
+                type="number"
+                step="0.01"
+                name="discountPrice"
+                value={selectedProduct.discountPrice}
+                onChange={handleInputChange}
+              />
 
-        <label>Image</label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-        />
-        {selectedProduct.image && (
-          <img
-            src={selectedProduct.image}
-            alt="Preview"
-            className={styles.imagePreview}
-          />
-        )}
-      </div>
-      <div className={styles.modalButtons}>
-        <button
-          className={styles.saveChangesButton}
-          onClick={handleSaveChanges}
-        >
-          Save Changes
-        </button>
-        <button
-          className={styles.cancelButton}
-          onClick={() => setShowModal(false)}
-        >
-          Cancel
-        </button>
-      </div>
-    </div>
-  </div>
-)}
-
+              <label>Image</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+              />
+              {selectedProduct.image && (
+                <img
+                  src={selectedProduct.image}
+                  alt="Preview"
+                  className={styles.imagePreview}
+                />
+              )}
+            </div>
+            <div className={styles.modalButtons}>
+              <button
+                className={styles.saveChangesButton}
+                onClick={handleSaveChanges}
+              >
+                Save Changes
+              </button>
+              <button
+                className={styles.cancelButton}
+                onClick={() => setShowModal(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

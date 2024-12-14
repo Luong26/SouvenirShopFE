@@ -20,7 +20,7 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    margin-bottom: 20px;
+    //margin-bottom: 20px;
     display: inline-block;
   }
   
@@ -33,7 +33,7 @@
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    border: 1px solid #000; /* Border around the table */
+    border: 1px solid #ccc; /* Border around the table */
   }
   
   /* Style for the table header */
@@ -46,7 +46,7 @@
   .vouchersTable th, .vouchersTable td {
     padding: 12px;
     text-align: center;
-    border: 1px solid #000; /* Black border */
+    border: 1px solid #ccc; /* Black border */
   }
   
   .vouchersTable tbody tr:hover {
@@ -170,4 +170,49 @@
   .cancelButton:hover {
     background-color: #c82333;
   }
+  
+  .vouchersContainer {
+    padding: 20px;
+  }
+  
+  .actionsRow {
+    display: flex;
+    //justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .filterContainer {
+    display: flex;
+    align-items: center;
+    margin-left: auto;  /* This will push the filter to the right */
+  }
+  
+  .filterContainer label {
+    margin-right: 10px;
+    font-weight: bold;
+  }
+  
+  .statusFilter {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100px;
+  }
+  
+  /* Style for the search container next to the filter */
+.searchContainer {
+  display: flex;
+  align-items: left;
+  margin-left: 30px;
+}
+
+.searchInput {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 300px;
+}
+
+  
   

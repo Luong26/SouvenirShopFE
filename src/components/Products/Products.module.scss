@@ -20,7 +20,6 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    margin-bottom: 20px;
     display: inline-block;
   }
   
@@ -176,3 +175,23 @@
   border-radius: 5px;
   margin: 10px 0;
 }
+
+.actionsRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+  /* Style for the search container next to the filter */
+  .searchContainer {
+    display: flex;
+    align-items: left;
+    margin-left: 30px;
+  }
+  
+  .searchInput {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px;
+  }

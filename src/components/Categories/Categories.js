@@ -1,19 +1,24 @@
-import React, { useState } from 'react';
-import styles from './Categories.module.scss';
+import React, { useState } from "react";
+import styles from "./Categories.module.scss";
 
 const Categories = () => {
   const initialCategories = [
-    { id: 1, name: 'Keychains', description: 'Various souvenir keychains', image: '' },
-    { id: 2, name: 'Mugs', description: 'Souvenir mugs and cups', image: '' },
+    { name: "Keychains", description: "Various souvenir keychains", image: "" },
+    { name: "Mugs", description: "Souvenir mugs and cups", image: "" },
   ];
 
   const [categories, setCategories] = useState(initialCategories);
   const [showModal, setShowModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
 
   const handleAddCategory = () => {
     setShowModal(true);
-    setSelectedCategory({ name: '', description: '', image: '' });
+    setSelectedCategory({ name: "", description: "", image: "" });
   };
 
   const handleEditCategory = (category) => {
@@ -21,19 +26,18 @@ const Categories = () => {
     setSelectedCategory(category);
   };
 
-  const handleDeleteCategory = (id) => {
-    setCategories(categories.filter((category) => category.id !== id));
+  const handleDeleteCategory = (name) => {
+    setCategories(categories.filter((category) => category.name !== name));
   };
 
   const handleSaveChanges = () => {
-    if (selectedCategory.id) {
+    if (selectedCategory.name) {
       const updatedCategories = categories.map((category) =>
-        category.id === selectedCategory.id ? selectedCategory : category
+        category.name === selectedCategory.name ? selectedCategory : category
       );
       setCategories(updatedCategories);
     } else {
-      const newCategory = { ...selectedCategory, id: categories.length + 1 };
-      setCategories([...categories, newCategory]);
+      setCategories([...categories, selectedCategory]);
     }
     setShowModal(false);
   };
@@ -52,16 +56,31 @@ const Categories = () => {
     reader.readAsDataURL(file);
   };
 
+  // Filter categories by name
+  const filteredCategories = categories.filter((category) =>
+    category.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className={styles.container}>
       <h2>Categories Management</h2>
-      <button className={styles.addCategoryButton} onClick={handleAddCategory}>
-        Add Category
-      </button>
+      <div className={styles.actionsRow}>
+        <button className={styles.addCategoryButton} onClick={handleAddCategory}>
+          Add Category
+        </button>
+        <div className={styles.searchContainer}>
+          <input
+            type="text"
+            placeholder="Search Categories by Name"
+            value={searchQuery}
+            onChange={handleSearch}
+            className={styles.searchInput}
+          />
+        </div>
+      </div>
       <table className={styles.categoriesTable}>
         <thead>
           <tr>
-            <th>#</th>
             <th>Name</th>
             <th>Description</th>
             <th>Image</th>
@@ -69,16 +88,19 @@ const Categories = () => {
           </tr>
         </thead>
         <tbody>
-          {categories.map((category) => (
-            <tr key={category.id}>
-              <td>{category.id}</td>
+          {filteredCategories.map((category, index) => (
+            <tr key={index}>
               <td>{category.name}</td>
               <td>{category.description}</td>
               <td>
                 {category.image ? (
-                  <img src={category.image} alt={category.name} className={styles.imagePreview} />
+                  <img
+                    src={category.image}
+                    alt={category.name}
+                    className={styles.imagePreview}
+                  />
                 ) : (
-                  'No Image'
+                  "No Image"
                 )}
               </td>
               <td>
@@ -90,7 +112,7 @@ const Categories = () => {
                 </button>
                 <button
                   className={styles.deleteButton}
-                  onClick={() => handleDeleteCategory(category.id)}
+                  onClick={() => handleDeleteCategory(category.name)}
                 >
                   Delete
                 </button>
@@ -103,7 +125,7 @@ const Categories = () => {
       {showModal && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
-            <h3>{selectedCategory.id ? 'Edit Category' : 'Add Category'}</h3>
+            <h3>{selectedCategory.name ? "Edit Category" : "Add Category"}</h3>
             <div className={styles.modalForm}>
               <label>Name</label>
               <input

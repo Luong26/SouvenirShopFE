@@ -1,133 +1,159 @@
 .container {
-    padding: 20px;
+  padding: 20px;
+}
+
+.accountsTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+
+  th {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
   }
-  
-  .accountsTable {
-    width: 100%;
-    border-collapse: collapse;
+
+  td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+
+    img.avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.editButton, .deleteButton {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.editButton {
+  background-color: #ffc107;
+  color: white;
+}
+
+.deleteButton {
+  background-color: #dc3545;
+  color: white;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.editForm {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px; /* Adjusted width for form */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+  h3 {
+    text-align: center; /* Center-align form heading */
+    margin-bottom: 20px;
+  }
+
+  .formGroup {
+    margin-bottom: 15px;
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px; /* Added padding for better appearance */
+      border: 1px solid #ccc;
+      border-radius: 5px; /* Slightly rounded corners */
+      font-size: 14px; /* Uniform font size */
+      box-sizing: border-box; /* Prevent overflow */
+    }
+
+    textarea {
+      resize: none; /* Prevent resizing of the text area */
+      height: 80px; /* Set a fixed height for description box */
+    }
+
+    img.avatarPreview {
+      margin-top: 10px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      justify-content: center;
+    }
+  }
+
+  .formActions {
+    display: flex;
+    justify-content: space-between; /* Space buttons evenly */
     margin-top: 20px;
-  
-    th {
+
+    button {
+      flex: 1; /* Buttons take equal space */
+      margin: 0 5px; /* Add spacing between buttons */
+      padding: 10px 0; /* Add padding for better button size */
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    .saveButton {
       background-color: #007bff;
       color: white;
-      padding: 10px;
-      text-align: center;
-      border: 1px solid #ccc;
     }
-  
-    td {
-      padding: 10px;
-      border: 1px solid #ccc;
-      text-align: center;
+
+    .cancelButton {
+      background-color: #dc3545;
+      color: white;
     }
   }
-  
-  .actions {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-  }
-  
-  .editButton {
-    background-color: #ffc107;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  
-    &:hover {
-      background-color: #e0a800;
-    }
-  }
-  
-  .deleteButton {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  
-    &:hover {
-      background-color: #c82333;
-    }
-  }
-  
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .editForm {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 400px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  
-    h3 {
-      margin-bottom: 20px;
-    }
-  
-    .formGroup {
-      margin-bottom: 15px;
-  
-      label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 5px;
-      }
-  
-      input,
-      select {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-      }
-    }
-  
-    .formActions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-  
-      .saveButton {
-        background-color: #007bff;
-        color: white;
-        border: none;
-        padding: 8px 15px;
-        border-radius: 3px;
-        cursor: pointer;
-  
-        &:hover {
-          background-color: #0056b3;
-        }
-      }
-  
-      .cancelButton {
-        background-color: #dc3545;
-        color: white;
-        border: none;
-        padding: 8px 15px;
-        border-radius: 3px;
-        cursor: pointer;
-  
-        &:hover {
-          background-color: #c82333;
-        }
-      }
-    }
-  }
-  
+}
+
+.searchContainer {
+  display: flex;
+  align-items: left;
+}
+
+.searchInput {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 300px;
+}

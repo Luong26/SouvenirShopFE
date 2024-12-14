@@ -9,11 +9,12 @@
   .addCategoryButton {
     background-color: #007bff;
     color: white;
-    padding: 10px 15px;
+    padding: 10px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
-    margin-bottom: 20px;
+    font-size: 16px;
+    display: inline-block;
   }
   
   .addCategoryButton:hover {
@@ -145,3 +146,22 @@
     background-color: #c82333;
   }
   
+  .actionsRow {
+    display: flex;
+    //justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .searchContainer {
+    display: flex;
+    align-items: left;
+    margin-left: 30px;
+  }
+  
+  .searchInput {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px;
+  }

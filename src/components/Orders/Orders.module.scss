@@ -174,3 +174,38 @@
   margin-top: 20px;
   text-align: left;  // Align the total to the right
 }
+
+.actionsRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+}
+
+.searchInput {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 350px;
+}
+
+.filterContainer {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.filterContainer label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.statusFilter {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
