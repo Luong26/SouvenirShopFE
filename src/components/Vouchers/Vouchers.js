@@ -1,18 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Vouchers.module.scss';
+import axios from 'axios';
+
+const API_BASE_URL = 'https://localhost:7096/api';
 
 const Vouchers = () => {
-  const initialVouchers = [
-    { id: 1, code: 'VOUCHER1', discount: '10%', validUntil: '2024-12-31', currentUsage: 2, maxUsage: 10, status: 'Active' },
-    { id: 2, code: 'VOUCHER2', discount: '20%', validUntil: '2024-12-31', currentUsage: 0, maxUsage: 5, status: 'Active' },
-    { id: 3, code: 'VOUCHER3', discount: '15%', validUntil: '2024-10-31', currentUsage: 1, maxUsage: 5, status: 'Expired' },
-  ];
-
-  const [vouchers, setVouchers] = useState(initialVouchers);
+  const [vouchers, setVouchers] = useState([]);
   const [filterStatus, setFilterStatus] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [selectedVoucher, setSelectedVoucher] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  // Fetch vouchers from API
+  const fetchVouchers = async () => {
+    setLoading(true);
+    try {
+      const token = localStorage.getItem('authToken'); // Retrieve token from localStorage
+      const response = await axios.get(`${API_BASE_URL}/Voucher`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      setVouchers(response.data);
+      setError(null); // Clear previous errors
+    } catch (err) {
+      console.error("Error fetching vouchers:", err.message);
+      setError(err.message); // Set error message
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchVouchers(); // Call fetchVouchers when the component mounts
+  }, []); // Empty dependency array ensures it runs once on mount
 
   const handleAddVoucher = () => {
     setShowModal(true);
@@ -22,11 +46,6 @@ const Vouchers = () => {
   const handleEditVoucher = (voucher) => {
     setShowModal(true);
     setSelectedVoucher(voucher);
-  };
-
-  const handleDeleteVoucher = (id) => {
-    const updatedVouchers = vouchers.filter((voucher) => voucher.id !== id);
-    setVouchers(updatedVouchers);
   };
 
   const handleSaveChanges = () => {
@@ -70,6 +89,7 @@ const Vouchers = () => {
   return (
     <div className={styles.vouchersContainer}>
       <h2>Manage Vouchers</h2>
+
       <div className={styles.actionsRow}>
         <button className={styles.addVoucherButton} onClick={handleAddVoucher}>
           Add Voucher
@@ -99,47 +119,51 @@ const Vouchers = () => {
           </select>
         </div>
       </div>
-      <table className={styles.vouchersTable}>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Code</th>
-            <th>Discount</th>
-            <th>Expiration Date</th>
-            <th>Status</th>
-            <th>Current Usage</th>
-            <th>Max Usage</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredVouchers.map((voucher) => (
-            <tr key={voucher.id}>
-              <td>{voucher.id}</td>
-              <td>{voucher.code}</td>
-              <td>{voucher.discount}</td>
-              <td>{voucher.validUntil}</td>
-              <td>{getStatus(voucher)}</td>
-              <td>{voucher.currentUsage}</td>
-              <td>{voucher.maxUsage}</td>
-              <td>
-                <button
-                  className={styles.editButton}
-                  onClick={() => handleEditVoucher(voucher)}
-                >
-                  Edit
-                </button>
-                <button
-                  className={styles.deleteButton}
-                  onClick={() => handleDeleteVoucher(voucher.id)}
-                >
-                  Delete
-                </button>
-              </td>
+
+      {/* Show loading spinner or message while fetching data */}
+      {loading && <p>Loading vouchers...</p>}
+
+      {/* Show error message if there's any error */}
+      {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+
+      {/* Show vouchers data after it's fetched */}
+      {!loading && !error && (
+        <table className={styles.vouchersTable}>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Code</th>
+              <th>Discount</th>
+              <th>Expiration Date</th>
+              <th>Status</th>
+              <th>Current Usage</th>
+              <th>Max Usage</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredVouchers.map((voucher) => (
+              <tr key={voucher.id}>
+                <td>{voucher.id}</td>
+                <td>{voucher.code}</td>
+                <td>{voucher.discount}</td>
+                <td>{voucher.validUntil}</td>
+                <td>{getStatus(voucher)}</td>
+                <td>{voucher.currentUsage}</td>
+                <td>{voucher.maxUsage}</td>
+                <td>
+                  <button
+                    className={styles.editButton}
+                    onClick={() => handleEditVoucher(voucher)}
+                  >
+                    Edit
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
 
       {showModal && (
         <div className={styles.modal}>

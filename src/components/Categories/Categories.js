@@ -1,16 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Categories.module.scss";
+import axios from "axios";
+
+const API_BASE_URL = 'https://localhost:7096/api';
 
 const Categories = () => {
-  const initialCategories = [
-    { name: "Keychains", description: "Various souvenir keychains", image: "" },
-    { name: "Mugs", description: "Souvenir mugs and cups", image: "" },
-  ];
+  // const initialCategories = [
+  //   { name: "Keychains", description: "Various souvenir keychains", image: "" },
+  //   { name: "Mugs", description: "Souvenir mugs and cups", image: "" },
+  // ];
 
-  const [categories, setCategories] = useState(initialCategories);
+  //const [categories, setCategories] = useState(initialCategories);
+  const [categories, setCategories] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const fetchCategories = async () => {
+    setLoading(true);
+    try {
+      const token = localStorage.getItem('authToken'); // Retrieve token from localStorage
+      const response = await axios.get(`${API_BASE_URL}/Category`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      setCategories(response.data);
+      setError(null); // Clear previous errors
+    } catch (err) {
+      console.error("Error fetching categories:", err.message);
+      setError(err.message); // Set error message
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  useEffect(() => {
+    fetchCategories(); // Call fetchCategories when the component mounts
+  }, []); // Empty dependency array ensures it runs once on mount
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
