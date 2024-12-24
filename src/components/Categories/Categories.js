@@ -261,12 +261,12 @@ const Categories = () => {
                 >
                   Edit
                 </button>
-                <button
+                {/* <button
                   className={styles.deleteButton}
                   onClick={() => handleDeleteCategory(category.name)}
                 >
                   Delete
-                </button>
+                </button> */}
               </td>
             </tr>
           ))}

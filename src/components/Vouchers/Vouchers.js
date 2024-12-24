@@ -24,41 +24,92 @@ const Vouchers = () => {
           'Content-Type': 'application/json',
         },
       });
-      setVouchers(response.data);
+  
+      const updatedVouchers = response.data.map((voucher) => {
+        const currentDate = new Date();
+        const expirationDate = new Date(voucher.expirationDate);
+  
+        // Check if the voucher needs to be updated
+        if (
+          (expirationDate <= currentDate || voucher.currentUsageCount >= voucher.maxUsageCount) &&
+          voucher.status === 1 // Only update if the status is currently active
+        ) {
+          updateVoucherStatus(voucher.id, { ...voucher, status: 0 });
+          return { ...voucher, status: 0 }; // Update locally
+        }
+        return voucher;
+      });
+  
+      setVouchers(updatedVouchers);
       setError(null); // Clear previous errors
     } catch (err) {
-      console.error("Error fetching vouchers:", err.message);
+      console.error('Error fetching vouchers:', err.message);
       setError(err.message); // Set error message
     } finally {
       setLoading(false);
     }
   };
 
+  // Function to update voucher status in the backend
+const updateVoucherStatus = async (id, updatedVoucher) => {
+  try {
+    const token = localStorage.getItem('authToken');
+    await axios.put(`${API_BASE_URL}/Voucher/${id}`, updatedVoucher, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+  } catch (error) {
+    console.error('Error updating voucher status:', error);
+  }
+};
+
   useEffect(() => {
     fetchVouchers(); // Call fetchVouchers when the component mounts
   }, []); // Empty dependency array ensures it runs once on mount
 
+  // useEffect(() => {
+  //   // Function to check and update the voucher status based on expiration and usage
+  //   const updateVoucherStatus = (voucher) => {
+  //     const currentDate = new Date();
+      
+  //     // Check if expiration date has passed or current usage has reached max usage count
+  //     if (new Date(voucher.expirationDate) <= currentDate || voucher.currentUsageCount >= voucher.maxUsageCount) {
+  //       if (voucher.status !== 0) {
+  //         // Update the status to inactive (0)
+  //         voucher.status = 0;
+  
+  //         // Call API to update the voucher status in the backend
+  //         axios.put(`${API_BASE_URL}/Voucher/${voucher.id}`, { ...voucher, status: 0 }, {
+  //           headers: {
+  //             'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+  //             'Content-Type': 'application/json',
+  //           }
+  //         }).then((response) => {
+  //           // Update state with new voucher data after status change
+  //           setVouchers(vouchers.map(v => v.id === voucher.id ? response.data : v));
+  //         }).catch((error) => {
+  //           console.error('Error updating voucher status:', error);
+  //         });
+  //       }
+  //     }
+  //   };
+  
+  //   // Loop through each voucher and update the status
+  //   vouchers.forEach(updateVoucherStatus);
+  
+  // }, [vouchers]); // Trigger this effect every time vouchers state changes
+  
+
   const handleAddVoucher = () => {
     setShowModal(true);
-    setSelectedVoucher({ code: '', discount: '', validUntil: '', maxUsage: 1 });
+    setSelectedVoucher({ code: '', discountAmount: '', expirationDate: '', maxUsageCount: 1, status: 1 }); // Default status to 1 (Active)
   };
 
   const handleEditVoucher = (voucher) => {
     setShowModal(true);
     setSelectedVoucher(voucher);
-  };
-
-  const handleSaveChanges = () => {
-    if (selectedVoucher.id) {
-      const updatedVouchers = vouchers.map((voucher) =>
-        voucher.id === selectedVoucher.id ? selectedVoucher : voucher
-      );
-      setVouchers(updatedVouchers);
-    } else {
-      const newVoucher = { ...selectedVoucher, id: vouchers.length + 1, currentUsage: 0, status: 'Active' };
-      setVouchers([...vouchers, newVoucher]);
-    }
-    setShowModal(false);
   };
 
   const handleInputChange = (e) => {
@@ -68,22 +119,65 @@ const Vouchers = () => {
 
   const handleStatusFilterChange = (e) => {
     setFilterStatus(e.target.value);
-  };
+  };  
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
 
   // Filter vouchers based on status and search query
-  const filteredVouchers = vouchers.filter(
-    (voucher) =>
-      (filterStatus === 'All' || voucher.status.toLowerCase() === filterStatus.toLowerCase()) &&
-      voucher.code.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredVouchers = vouchers.filter((voucher) => {
+    const statusMatches =
+      filterStatus === 'All' || 
+      (filterStatus === '1' && voucher.status === 1) || 
+      (filterStatus === '0' && voucher.status === 0);
+  
+    const searchMatches = voucher.code.toLowerCase().includes(searchQuery.toLowerCase());
+  
+    return statusMatches && searchMatches;
+  });
+  
 
   const getStatus = (voucher) => {
-    const today = new Date().toISOString().split('T')[0];
-    return new Date(voucher.validUntil) >= new Date(today) ? 'Active' : 'Expired';
+    return voucher.status === 1 ? 'Active' : 'Inactive';
+  };
+
+  // Save voucher (Add/Edit) API call
+  const handleSaveVoucher = async () => {
+    try {
+      const token = localStorage.getItem('authToken');
+      const response = selectedVoucher.id
+        ? await axios.put(`${API_BASE_URL}/Voucher/${selectedVoucher.id}`, selectedVoucher, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          })
+        : await axios.post(`${API_BASE_URL}/Voucher`, selectedVoucher, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          });
+
+      // Update the vouchers state based on whether it's an add or edit operation
+      if (selectedVoucher.id) {
+        // Update the voucher in the list (editing)
+        setVouchers(
+          vouchers.map((voucher) =>
+            voucher.id === selectedVoucher.id ? response.data : voucher
+          )
+        );
+      } else {
+        // Add the new voucher to the list
+        setVouchers([...vouchers, response.data]);
+      }
+
+      setShowModal(false);
+    } catch (err) {
+      console.error('Error saving voucher:', err);
+      setError(err.message);
+    }
   };
 
   return (
@@ -114,8 +208,8 @@ const Vouchers = () => {
             onChange={handleStatusFilterChange}
           >
             <option value="All">All</option>
-            <option value="Active">Active</option>
-            <option value="Expired">Expired</option>
+            <option value="1">Active</option>
+            <option value="0">Inactive</option>
           </select>
         </div>
       </div>
@@ -131,7 +225,6 @@ const Vouchers = () => {
         <table className={styles.vouchersTable}>
           <thead>
             <tr>
-              <th>#</th>
               <th>Code</th>
               <th>Discount</th>
               <th>Expiration Date</th>
@@ -144,13 +237,12 @@ const Vouchers = () => {
           <tbody>
             {filteredVouchers.map((voucher) => (
               <tr key={voucher.id}>
-                <td>{voucher.id}</td>
                 <td>{voucher.code}</td>
-                <td>{voucher.discount}</td>
-                <td>{voucher.validUntil}</td>
+                <td>{voucher.discountAmount}</td>
+                <td>{voucher.expirationDate}</td>
                 <td>{getStatus(voucher)}</td>
-                <td>{voucher.currentUsage}</td>
-                <td>{voucher.maxUsage}</td>
+                <td>{voucher.currentUsageCount}</td>
+                <td>{voucher.maxUsageCount}</td>
                 <td>
                   <button
                     className={styles.editButton}
@@ -179,29 +271,38 @@ const Vouchers = () => {
               />
               <label>Discount</label>
               <input
-                type="text"
-                name="discount"
-                value={selectedVoucher.discount}
+                type="number"
+                name="discountAmount"
+                value={selectedVoucher.discountAmount}
                 onChange={handleInputChange}
               />
               <label>Expiration Date</label>
               <input
                 type="date"
-                name="validUntil"
-                value={selectedVoucher.validUntil}
+                name="expirationDate"
+                value={selectedVoucher.expirationDate}
                 onChange={handleInputChange}
               />
               <label>Max Usage Count</label>
               <input
                 type="number"
-                name="maxUsage"
-                value={selectedVoucher.maxUsage}
+                name="maxUsageCount"
+                value={selectedVoucher.maxUsageCount}
                 min="1"
                 onChange={handleInputChange}
               />
+              <label>Status</label>
+              <select
+                name="status"
+                value={selectedVoucher.status}
+                onChange={handleInputChange}
+              >
+                <option value="1">Active</option>
+                <option value="0">Inactive</option>
+              </select>
             </div>
             <div className={styles.modalButtons}>
-              <button className={styles.saveChangesButton} onClick={handleSaveChanges}>
+              <button className={styles.saveChangesButton} onClick={handleSaveVoucher}>
                 Save Changes
               </button>
               <button className={styles.cancelButton} onClick={() => setShowModal(false)}>
