@@ -125,6 +125,15 @@
     box-sizing: border-box; /* Ensures padding doesn't affect width */
   }
   
+  .modalForm select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+
   /* Modal button layout */
   .modalButtons {
     display: flex;
