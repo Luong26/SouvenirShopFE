@@ -67,10 +67,13 @@ const Products = () => {
         url,
         headers: {
           'Authorization': `Bearer ${token}`, // Add token to the headers
+          'Content-Type': 'multipart/form-data', // Set content type for form data
         },
         data: formData, // Send form data
       });
   
+      console.log('Product created/updated:', response.data);
+      // Handle success (e.g., update state, show success message)
       if (product.id) {
         // Update the existing product
         setProducts((prevProducts) =>
@@ -81,8 +84,9 @@ const Products = () => {
         setProducts((prevProducts) => [...prevProducts, response.data]);
       }
       setError(null); // Clear previous errors
-    } catch (err) {
-      setError(`Error: ${err.response ? err.response.data.message : err.message}`);
+    } catch (error) {
+      console.error('Error creating/updating product:', error);
+      setError(error.response ? error.response.data : error.message); // Set the error message
     }
   };
   
@@ -170,12 +174,13 @@ const handleSaveChanges = () => {
       {/* Error Message */}
       {error && (
         <div className={styles.errorMessage}>
-          {error}
+          {typeof error === 'object' ? JSON.stringify(error) : error}
           <button onClick={fetchProducts} className={styles.retryButton}>
             Retry
           </button>
         </div>
       )}
+
 
       {/* Loading State */}
       {loading && <div className={styles.loadingMessage}>Loading...</div>}
@@ -322,5 +327,4 @@ const handleSaveChanges = () => {
   );
 };
 
-export default Products;  
-
+export default Products;

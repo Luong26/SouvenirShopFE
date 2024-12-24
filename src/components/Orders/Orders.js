@@ -185,7 +185,8 @@ const Orders = () => {
           >
             <option value="">All</option>
             <option value="Pending">Pending</option>
-            <option value="Shipped">Shipped</option>
+            <option value="Processing">Processing</option>
+            <option value="Shipping">Shipped</option>
             <option value="Delivered">Delivered</option>
             <option value="Cancelled">Cancelled</option>
           </select>
@@ -253,6 +254,7 @@ const Orders = () => {
                         className={styles.statusDropdown}
                       >
                         <option value="Pending">Pending</option>
+                        <option value="Processing">Processing</option>
                         <option value="Shipped">Shipped</option>
                         <option value="Delivered">Delivered</option>
                         <option value="Cancelled">Cancelled</option>
