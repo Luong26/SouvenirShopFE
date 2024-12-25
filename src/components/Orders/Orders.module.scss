@@ -145,7 +145,7 @@
 .modalTitle {
   background-color: #ffffff;
   color: black;
-  padding: 10px;
+  padding: 0px;
   border-radius: 5px;
 }
 
@@ -208,4 +208,19 @@
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+.orderInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.statusContainer {
+  margin-left: auto;  // Aligns the Status dropdown to the right
+}
+
+.statusDropdown {
+  width: auto; // You can adjust the width if necessary
 }

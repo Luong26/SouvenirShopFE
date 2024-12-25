@@ -5,12 +5,6 @@ import axios from "axios";
 const API_BASE_URL = 'https://localhost:7096/api';
 
 const Categories = () => {
-  // const initialCategories = [
-  //   { name: "Keychains", description: "Various souvenir keychains", image: "" },
-  //   { name: "Mugs", description: "Souvenir mugs and cups", image: "" },
-  // ];
-
-  //const [categories, setCategories] = useState(initialCategories);
   const [categories, setCategories] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -37,7 +31,7 @@ const Categories = () => {
       setLoading(false);
     }
   };
-  
+
   useEffect(() => {
     fetchCategories(); // Call fetchCategories when the component mounts
   }, []); // Empty dependency array ensures it runs once on mount
@@ -60,17 +54,6 @@ const Categories = () => {
     setCategories(categories.filter((category) => category.name !== name));
   };
 
-  // const handleSaveChanges = () => {
-  //   if (selectedCategory.name) {
-  //     const updatedCategories = categories.map((category) =>
-  //       category.name === selectedCategory.name ? selectedCategory : category
-  //     );
-  //     setCategories(updatedCategories);
-  //   } else {
-  //     setCategories([...categories, selectedCategory]);
-  //   }
-  //   setShowModal(false);
-  // };
   const handleSaveChanges = async () => {
     if (!selectedCategory.name || !selectedCategory.description || !selectedCategory.imageFile) {
       alert("All fields are required: Name, Description, and an Image.");
@@ -106,9 +89,6 @@ const Categories = () => {
       // Set selectedCategory to the newly created category including its ID
       setSelectedCategory(newCategory);
   
-      // Optionally, store the new category id in localStorage or a global state
-      // localStorage.setItem("newCategoryId", newCategory.id);  // Use this for cross-page access
-  
       setShowModal(false);
       setError(null);
     } catch (err) {
@@ -118,8 +98,7 @@ const Categories = () => {
       setLoading(false);
     }
   };
-  
-  //================================================================================================
+
   const handleEditChange = async () => {
     if (!selectedCategory.name || !selectedCategory.description || !selectedCategory.imageUrl) {
       alert("All fields are required: Name, Description, and Image.");
@@ -167,20 +146,12 @@ const Categories = () => {
       setLoading(false);
     }
   };
-  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setSelectedCategory({ ...selectedCategory, [name]: value });
   };
 
-  // const handleImageChange = (e) => {
-  //   const file = e.target.files[0];
-  //   const reader = new FileReader();
-  //   reader.onload = () => {
-  //     setSelectedCategory({ ...selectedCategory, image: reader.result });
-  //   };
-  //   reader.readAsDataURL(file);
-  // };
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (!file) {
@@ -204,8 +175,6 @@ const Categories = () => {
     // Save file for uploading
     setSelectedCategory({ ...selectedCategory, imageFile: file });
   };
-  
-  
 
   // Filter categories by name
   const filteredCategories = categories.filter((category) =>
@@ -234,7 +203,7 @@ const Categories = () => {
           <tr>
             <th>Name</th>
             <th>Description</th>
-            <th>Image</th>
+            {/* <th>Image</th> */}
             <th>Actions</th>
           </tr>
         </thead>
@@ -243,7 +212,7 @@ const Categories = () => {
             <tr key={index}>
               <td>{category.name}</td>
               <td>{category.description}</td>
-              <td>
+              {/* <td>
                 {category.image ? (
                   <img
                     src={category.image}
@@ -253,7 +222,7 @@ const Categories = () => {
                 ) : (
                   "No Image"
                 )}
-              </td>
+              </td> */}
               <td>
                 <button
                   className={styles.editButton}
@@ -261,12 +230,6 @@ const Categories = () => {
                 >
                   Edit
                 </button>
-                {/* <button
-                  className={styles.deleteButton}
-                  onClick={() => handleDeleteCategory(category.name)}
-                >
-                  Delete
-                </button> */}
               </td>
             </tr>
           ))}
@@ -291,7 +254,7 @@ const Categories = () => {
                 value={selectedCategory.description}
                 onChange={handleInputChange}
               />
-              <label>Image</label>
+              {/* <label>Image</label>
               <input type="file" onChange={handleImageChange} />
               {selectedCategory.imageUrl && (
                 <img
@@ -299,7 +262,7 @@ const Categories = () => {
                   alt="Preview"
                   className={styles.imagePreview}
                 />
-              )}
+              )} */}
             </div>
             <div className={styles.modalButtons}>
               <button

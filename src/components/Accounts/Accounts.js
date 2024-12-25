@@ -6,17 +6,17 @@ const Accounts = () => {
     { 
       id: 1, 
       avatar: "https://via.placeholder.com/50", 
-      email: "john.doe1@example.com", 
-      name: "John Doe", 
-      phone: "123-456-7890", 
+      email: "admin@gmail.com", 
+      name: "Shop Admin", 
+      phone: "093-533-1673", 
       role: "Admin" 
     },
     { 
       id: 2, 
       avatar: "https://via.placeholder.com/50", 
-      email: "jane.doe2@example.com", 
-      name: "Jane Doe", 
-      phone: "987-654-3210", 
+      email: "test@gmail.com", 
+      name: "Shop Test", 
+      phone: "097-654-3210", 
       role: "User" 
     },
   ]);
@@ -58,9 +58,9 @@ const Accounts = () => {
     setEditAccount(null);
   };
 
-  const handleDelete = (id) => {
-    setAccounts((prevAccounts) => prevAccounts.filter((account) => account.id !== id));
-  };
+  // const handleDelete = (id) => {
+  //   setAccounts((prevAccounts) => prevAccounts.filter((account) => account.id !== id));
+  // };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -99,7 +99,7 @@ const Accounts = () => {
       <table className={styles.accountsTable}>
         <thead>
           <tr>
-            <th>Avatar</th>
+            {/* <th>Avatar</th> */}
             <th>Email</th>
             <th>Name</th>
             <th>Phone</th>
@@ -110,9 +110,9 @@ const Accounts = () => {
         <tbody>
           {filteredAccounts.map((account) => (
             <tr key={account.id}>
-              <td>
+              {/* <td>
                 <img src={account.avatar} alt="Avatar" className={styles.avatar} />
-              </td>
+              </td> */}
               <td>{account.email}</td>
               <td>{account.name}</td>
               <td>{account.phone}</td>
@@ -125,12 +125,12 @@ const Accounts = () => {
                   >
                     Edit
                   </button>
-                  <button
+                  {/* <button
                     className={styles.deleteButton}
                     onClick={() => handleDelete(account.id)}
                   >
                     Delete
-                  </button>
+                  </button> */}
                 </div>
               </td>
             </tr>
@@ -144,7 +144,7 @@ const Accounts = () => {
             <h3>Edit Account</h3>
             <form>
               <div className={styles.formGroup}>
-                <label htmlFor="avatar">Avatar</label>
+                {/* <label htmlFor="avatar">Avatar</label>
                 <input
                   type="file"
                   id="avatar"
@@ -157,7 +157,7 @@ const Accounts = () => {
                     alt="Preview"
                     className={styles.avatarPreview}
                   />
-                )}
+                )} */}
               </div>
               <div className={styles.formGroup}>
                 <label htmlFor="email">Email</label>

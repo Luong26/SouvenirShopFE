@@ -25,11 +25,22 @@ const fetchProducts = async () => {
 const LoginSignup = ({ onLogin }) => {
   const [isLoginMode, setIsLoginMode] = useState(true);
 
+  // const [formData, setFormData] = useState({
+  //   userName: '',
+  //   password: '',
+  //   email: '',
+  // });
   const [formData, setFormData] = useState({
     userName: '',
     password: '',
     email: '',
+    fullName: '',  // Add fullName
+    phoneNumber: '',  // Add phoneNumber
+    address: '',  // Add address
+    avatarUrl: '',  // Add avatarUrl (this might be optional, depending on your app)
+    gender: true,  // Default to true (or false, based on your needs)
   });
+  
 
   const toggleMode = () => {
     setIsLoginMode(!isLoginMode);
@@ -42,30 +53,44 @@ const LoginSignup = ({ onLogin }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     const url = isLoginMode ? `${API_BASE_URL}/Account/login` : `${API_BASE_URL}/Account/register`;
     const payload = isLoginMode
       ? { userName: formData.userName, password: formData.password }
-      : { email: formData.email, userName: formData.userName, password: formData.password };
-
+      : {
+          email: formData.email,
+          userName: formData.userName,
+          password: formData.password,
+          fullName: formData.fullName,  // Add fullName
+          phoneNumber: formData.phoneNumber,  // Add phoneNumber
+          address: formData.address,  // Add address
+          avatarUrl: formData.avatarUrl,  // Add avatarUrl
+          gender: formData.gender,  // Add gender (true or false)
+        };
+  
+    // Log the payload to check its structure
+    console.log("Payload being sent:", payload);
+  
     try {
       const response = await axios.post(url, payload);
       if (isLoginMode) {
-        const token = response.data.token; // Assuming the token is in the response data
-        localStorage.setItem('authToken', token); // Store the token in localStorage
+        const token = response.data.token;  // Assuming token is returned
+        localStorage.setItem('authToken', token);  // Store token
         console.log('Logged in with:', formData);
-
-        // Call the onLogin function passed from App.js
         onLogin();
-        fetchProducts(); // Fetch products after obtaining the token
+        fetchProducts();
       } else {
         console.log('Signed up with:', formData);
       }
     } catch (error) {
-      console.error(isLoginMode ? 'Login failed:' : 'Signup failed:', error);
-      // Handle error (e.g., show error message to the user)
+      if (error.response) {
+        console.error(isLoginMode ? 'Login failed:' : 'Signup failed:', error.response.data);
+      } else {
+        console.error(isLoginMode ? 'Login failed:' : 'Signup failed:', error.message);
+      }
     }
   };
+  
 
   return (
     <div
@@ -103,9 +128,9 @@ const LoginSignup = ({ onLogin }) => {
           />
           <button className={styles.submitBtn} type="submit">{isLoginMode ? 'Login' : 'Sign Up'}</button>
         </form>
-        <button onClick={toggleMode}>
+        {/* <button onClick={toggleMode}>
           {isLoginMode ? "Don't have an account? Sign Up" : 'Already have an account? Login'}
-        </button>
+        </button> */}
       </div>
     </div>
   );
